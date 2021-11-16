@@ -22,7 +22,7 @@ public class UserPosJava {
 		this.nome = nome;
 	}
 	
-	public String getemail() {
+	public String getEmail() {
 		return this.email;
 	}
 	
