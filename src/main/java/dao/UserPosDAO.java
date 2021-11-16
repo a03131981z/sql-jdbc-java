@@ -92,4 +92,21 @@ public class UserPosDAO {
 			e.printStackTrace();
 		}
 	}
+	
+	public void deletar(Long id) {
+		try {
+			String sql = "delete from userposjava where id = "+id;
+			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.execute();
+			connection.commit();
+
+		}catch(SQLException e) {
+			try {
+				connection.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+		}
+	}
 }
