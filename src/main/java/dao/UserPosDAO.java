@@ -1,8 +1,10 @@
 package dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
-
+import java.util.List;
+import java.util.ArrayList;
 import conexao_jdbc.SingleConnection;
 import model.UserPosJava;
 
@@ -33,5 +35,40 @@ public class UserPosDAO {
 			
 			e.printStackTrace();
 		}
+	}
+	
+	public List<UserPosJava> listar() throws SQLException{
+		List<UserPosJava> list = new ArrayList<UserPosJava>();
+		String sql = "select * from userposjava";
+		PreparedStatement statement = connection.prepareStatement(sql);
+		ResultSet resultado = statement.executeQuery();
+		
+		while(resultado.next()) {
+			UserPosJava userPosJava = new UserPosJava();
+			userPosJava.setId(resultado.getLong("id"));
+			userPosJava.setNome(resultado.getString("nome"));
+			userPosJava.setEmail(resultado.getString("email"));
+			
+			list.add(userPosJava);
+		}
+		
+		return list;
+	}
+	
+	public UserPosJava buscar(Long id) throws SQLException{
+		UserPosJava retorno = new UserPosJava();
+		
+		String sql = "select * from userposjava where id = "+id;
+		PreparedStatement statement = connection.prepareStatement(sql);
+		ResultSet resultado = statement.executeQuery();
+		
+		while(resultado.next()) { //Retorna apenas um ou nenhum
+			
+			retorno.setId(resultado.getLong("id"));
+			retorno.setNome(resultado.getString("nome"));
+			retorno.setEmail(resultado.getString("email"));
+				
+		}	
+		return retorno;
 	}
 }
