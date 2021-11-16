@@ -3,6 +3,9 @@ import java.sql.SQLException;
 import java.util.List;
 
 import org.junit.Test;
+
+import com.sun.jna.platform.win32.WinBase.PROCESS_INFORMATION.ByReference;
+
 import dao.UserPosDAO;
 import model.UserPosJava;
 
@@ -35,6 +38,19 @@ public class TesteBancoJDBC {
 		try {
 			UserPosJava userPosJava = dao.buscar(10L);
 			System.out.println(userPosJava);
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void initAtualizar() {
+		try {
+			UserPosDAO dao = new UserPosDAO();
+			UserPosJava objetoBanco = dao.buscar(5L);
+			objetoBanco.setNome("Nome mudado com método atualizar");
+			dao.atualizar(objetoBanco);
 			
 		}catch(Exception e) {
 			e.printStackTrace();

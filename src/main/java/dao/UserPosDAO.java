@@ -4,6 +4,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+
+import org.postgresql.util.PSQLException;
+
 import java.util.ArrayList;
 import conexao_jdbc.SingleConnection;
 import model.UserPosJava;
@@ -70,5 +73,24 @@ public class UserPosDAO {
 				
 		}	
 		return retorno;
+	}
+	
+	public void atualizar(UserPosJava userPosJava) {
+		try {
+			
+			String sql = "update userposjava set nome = ? where id = "+userPosJava.getId();
+			PreparedStatement statement = connection.prepareStatement(sql);
+			statement.setString(1, userPosJava.getNome());
+			statement.execute();
+			connection.commit();
+		
+		} catch (SQLException e) {
+			try {
+				connection.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+		}
 	}
 }
