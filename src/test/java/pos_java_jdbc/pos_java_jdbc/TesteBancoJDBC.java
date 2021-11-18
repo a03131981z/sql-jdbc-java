@@ -7,6 +7,7 @@ import org.junit.Test;
 import com.sun.jna.platform.win32.WinBase.PROCESS_INFORMATION.ByReference;
 
 import dao.UserPosDAO;
+import model.Telefone;
 import model.UserPosJava;
 
 public class TesteBancoJDBC {
@@ -66,5 +67,16 @@ public class TesteBancoJDBC {
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	@Test
+	public void testeInsertTelefone() {
+		Telefone telefone = new Telefone();
+		telefone.setNumero("(83) 9392-8392");
+		telefone.setTipo("Casa");
+		telefone.setUsuario(16L);
+		
+		UserPosDAO dao = new UserPosDAO();
+		dao.salvarTelefone(telefone);
 	}
 }

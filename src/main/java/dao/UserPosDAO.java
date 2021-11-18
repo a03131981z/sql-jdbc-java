@@ -9,6 +9,7 @@ import org.postgresql.util.PSQLException;
 
 import java.util.ArrayList;
 import conexao_jdbc.SingleConnection;
+import model.Telefone;
 import model.UserPosJava;
 
 public class UserPosDAO {
@@ -21,7 +22,7 @@ public class UserPosDAO {
 	
 	public void salvar(UserPosJava userPosJava) {
 		try {
-			String sql = "insert into userposjava (nome, email) values(?, ?)";
+			String sql = "insert into userposjava (nome, email) values (?, ?)";
 			PreparedStatement insert = connection.prepareStatement(sql);
 			insert.setString(1, userPosJava.getNome());
 			insert.setString(2, userPosJava.getEmail());
@@ -36,6 +37,29 @@ public class UserPosDAO {
 			}
 			
 			e.printStackTrace();
+		}
+	}
+	
+	public void salvarTelefone(Telefone telefone) {
+		
+		try {
+			String sql = "insert into telefoneuser(numero, tipo, usuariopessoa) values(?, ?, ?);";
+			PreparedStatement statement = connection.prepareStatement(sql);
+			statement.setString(1, telefone.getNumero());
+			statement.setString(2, telefone.getTipo());
+			statement.setLong(3, telefone.getUsuario());
+			statement.execute();
+			connection.commit();
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+			
+			try {
+				connection.rollback();
+				
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
 		}
 	}
 	
